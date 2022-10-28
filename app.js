@@ -48,6 +48,18 @@ class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = { date: new Date() };
+    this.timer = null;
+  }
+
+  ComponentDidMount() {
+    this.timer = Window.setInterval(this.tick(), 1000);
+  }
+
+  ComponentWillUnMount() {
+    window.clearInterval(this.timer);
+  }
+  tick() {
+    this.setState({ date: new Date() });
   }
   //const date = new Date();
   render() {
@@ -59,12 +71,41 @@ class Clock extends React.Component {
     );
   }
 }
+
+class Incrementer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { n: props.start };
+    this.timer = null;
+  }
+  ComponentDidMount() {
+    window.setInterval(this.increment.bind(this), 1000);
+  }
+  ComponentWillUnMount() {
+    window.clearInterval(this.timer);
+  }
+  increment() {
+    this.setState((state, props) => ({ n: state.n + props.step }));
+  }
+
+  render() {
+    return <div>Valeur : {this.state.n}</div>;
+  }
+}
+
+Incrementer.defaultProps = {
+  start: 0,
+  step: 1,
+};
+
 function Home() {
   return (
     <div>
       <Welcome name="PICA" />
       <Welcome name="ZORO" />
       <Clock />
+      <Incrementer start={10} />
+      <Incrementer start={20} step={2} />
     </div>
   );
 }
@@ -73,7 +114,7 @@ function Home() {
   <WelcomeFunc name="douam">greating everybody</WelcomeFunc>,
   document.querySelector("#app")
 );*/
-
-ReactDOM.render(<Home name="douam" />, document.querySelector("#app"));
+const root = ReactDOM.createRoot(document.querySelector("#app"));
+root.render(<Home name="douam" />);
 
 //ReactDOM.render(<Clock />, document.querySelector("#app2"));
