@@ -9,7 +9,7 @@ function render() {
       Hello test function <span>{n % 2 ? numberFormat(n) : null}</span>
     </h1>
   );
-  ReactDOM.render(title, document.querySelector("#app2"));
+  //ReactDOM.render(title, document.querySelector("#app2"));
 }
 
 render();
@@ -48,16 +48,24 @@ class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = { date: new Date() };
-    this.timer = null;
+    this.timerID = null;
   }
 
-  ComponentDidMount() {
-    this.timer = Window.setInterval(this.tick(), 1000);
+  componentDidMount() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
   }
+    //another classic way to do it !
+    //this.timer = setInterval(this.tick, 1000);
 
-  ComponentWillUnMount() {
-    window.clearInterval(this.timer);
-  }
+    ComponentWillUnMount() {
+      clearInterval(
+        () => this.timerID(),
+        1000
+      );
+    }
   tick() {
     this.setState({ date: new Date() });
   }
@@ -75,37 +83,67 @@ class Clock extends React.Component {
 class Incrementer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { n: props.start };
-    this.timer = null;
+    this.state = { n: props.start, timerID: null };
+    //this.timeID= null;
   }
-  ComponentDidMount() {
-    window.setInterval(this.increment.bind(this), 1000);
+  componentDidMount() {
+     this.play()
   }
-  ComponentWillUnMount() {
-    window.clearInterval(this.timer);
+
+  ComponentWillUnMount() { 
+      this.pause()
   }
   increment() {
     this.setState((state, props) => ({ n: state.n + props.step }));
   }
-
+  pause() {
+    clearInterval(this.state.timerID)
+    this.setState({
+      timerID: null
+    })
+   }
+  
+  play() {
+   this.setState({
+    timerID : setInterval(this.increment.bind(this), 1000)
+   })
+  }
   render() {
-    return <div>Valeur : {this.state.n}</div>;
+    return <div>Valeur : {this.state.n} 
+    <button onClick={this.pause.bind(this)} >Pause</button>
+    <button onClick={this.play.bind(this)}>Play</button></div>;
   }
 }
 
 Incrementer.defaultProps = {
   start: 0,
-  step: 1,
+  step: 1
 };
 
+/**class ManualIncrementor extends React.Component {
+ constructor(props) {
+   super(props)
+   this.state = {n : 0}  
+ }
+ increment (e){
+  e.preventDefault()
+   this.setState((state, props) => ({n: state.n + 1}) );
+ }
+ 
+
+ render () {
+   return <div>Valeur : {this.state.n} <button onClick={this.increment.bind(this)}>Increment</button></div>
+
+ }
+}*/
 function Home() {
   return (
     <div>
       <Welcome name="PICA" />
       <Welcome name="ZORO" />
       <Clock />
-      <Incrementer start={10} />
-      <Incrementer start={20} step={2} />
+      
+      <Incrementer />
     </div>
   );
 }
@@ -116,5 +154,4 @@ function Home() {
 );*/
 const root = ReactDOM.createRoot(document.querySelector("#app"));
 root.render(<Home name="douam" />);
-
 //ReactDOM.render(<Clock />, document.querySelector("#app2"));
