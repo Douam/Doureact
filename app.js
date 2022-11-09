@@ -108,13 +108,28 @@ class Incrementer extends React.Component {
     timerID : setInterval(this.increment.bind(this), 1000)
    })
   }
+  toggle(){
+    return this.state.timerID ? this.pause() : this.play()
+  }
+  label(){
+    return this.state.timerID ? 'Pause' : 'Play'
+  }
+  reset(){
+    this.pause()
+    this.play()
+    this.setState((state, props) => ({ n: props.start }))
+  }
   render() {
-    return <div>Valeur : {this.state.n} 
-    <button onClick={this.pause.bind(this)} >Pause</button>
-    <button onClick={this.play.bind(this)}>Play</button></div>;
+    return <div>
+      Valeur : {this.state.n}
+      <button onClick={this.toggle.bind(this)}>{this.label()}</button>
+      <button onClick={this.reset.bind(this)}>Reset</button>
+    </div>
   }
 }
-
+//method 1
+      //this.state.timerID ? <button onClick={this.pause.bind(this)} >Pause</button> :
+      //<button onClick={this.play.bind(this)}> Play</button>
 Incrementer.defaultProps = {
   start: 0,
   step: 1
@@ -155,3 +170,12 @@ function Home() {
 const root = ReactDOM.createRoot(document.querySelector("#app"));
 root.render(<Home name="douam" />);
 //ReactDOM.render(<Clock />, document.querySelector("#app2"));
+
+class app extends React.Component{
+  render(){
+    return <div>
+      <label HtmlFor="name">Your Name</label>
+    </div>
+  }
+}
+const root2 = ReactDOM.createRoot(document.querySelector("#app2"));
