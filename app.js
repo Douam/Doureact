@@ -171,11 +171,44 @@ const root = ReactDOM.createRoot(document.querySelector("#app"));
 root.render(<Home name="douam" />);
 //ReactDOM.render(<Clock />, document.querySelector("#app2"));
 
-class app extends React.Component{
+class App extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      name : '',
+      firstName : '',
+      newsletter : false
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(e){
+    const name = e.target.name 
+    const type = e.target.type
+    const value = type === 'checked' ? e.target.checked : e.target.value
+
+    this.setState({
+      [name] : value
+    })
+  }
+
   render(){
     return <div>
-      <label HtmlFor="name">Your Name</label>
+      <div>
+          <label htmlFor="firstName">Your firstName </label>
+          <input type="text" id ="firstName" name="firstName" value = {this.state.firstName} onChange={this.handleChange}/>
+      </div>
+      <div>
+          <label htmlFor="name">Your Second Name </label>
+          <input type="text" id ="name" name="name" value = {this.state.name} onChange={this.handleChange}/>
+      </div>
+      <div>
+          <label htmlFor="newsletter">Subscribe to Newsletter</label>
+          <input type="checkbox" name="newsletter" id ="newsletter" checked = {this.state.newsletter} onChange={this.handleChange}/>
+          {JSON.stringify(this.state)}
+      </div>
     </div>
   }
 }
 const root2 = ReactDOM.createRoot(document.querySelector("#app2"));
+root2.render(<App/>);
