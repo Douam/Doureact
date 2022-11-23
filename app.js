@@ -120,10 +120,10 @@ class Incrementer extends React.Component {
     this.setState((state, props) => ({ n: props.start }))
   }
   render() {
-    return <div>
+    return <div className="form-group">
       Valeur : {this.state.n}
-      <button onClick={this.toggle.bind(this)}>{this.label()}</button>
-      <button onClick={this.reset.bind(this)}>Reset</button>
+      <button className="alert alert-success" onClick={this.toggle.bind(this)}>{this.label()}</button>
+      <button className="alert alert-danger" onClick={this.reset.bind(this)}>Reset</button>
     </div>
   }
 }
@@ -193,18 +193,18 @@ class App extends React.Component{
   }
 
   render(){
-    return <div>
-      <div>
+    return <div className="container">
+      <div className="form-group">
           <label htmlFor="firstName">Your firstName </label>
-          <input type="text" id ="firstName" name="firstName" value = {this.state.firstName} onChange={this.handleChange}/>
+          <input type="text" id ="firstName" name="firstName" className="form-control" value = {this.state.firstName} onChange={this.handleChange}/>
       </div>
-      <div>
+      <div className="form-group">
           <label htmlFor="name">Your Second Name </label>
-          <input type="text" id ="name" name="name" value = {this.state.name} onChange={this.handleChange}/>
+          <input type="text" id ="name" name="name" className="form-control" value = {this.state.name} onChange={this.handleChange}/>
       </div>
-      <div>
+      <div className="form-group">
           <label htmlFor="newsletter">Subscribe to Newsletter</label>
-          <input type="checkbox" name="newsletter" id ="newsletter" checked = {this.state.newsletter} onChange={this.handleChange}/>
+          <input type="checkbox" name="newsletter" id ="newsletter" className="form-control" checked = {this.state.newsletter} onChange={this.handleChange}/>
           {JSON.stringify(this.state)}
       </div>
     </div>
