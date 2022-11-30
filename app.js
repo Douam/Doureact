@@ -228,6 +228,10 @@ class App extends React.Component {
             checked={this.state.newsletter}
             onChange={this.handleChange}
           />
+          <button type="submit" className="btn btn-primary">
+            Send
+          </button>
+          <br />
           {JSON.stringify(this.state)}
         </div>
       </div>
