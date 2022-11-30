@@ -69,9 +69,12 @@ function ProductTable({ products }) {
     </table>
   );
 }
-class FilterableTableProduct extends React.Component {
-  render() {}
+class FilterableProductTable extends React.Component {
+  render() {
+    const { products } = this.props;
+    return <ProductTable products={products} />;
+  }
 }
 const root2 = ReactDOM.createRoot(document.querySelector("#app2"));
-root2.render(<FilterableTableProduct products={PRODUCTS} />),
+root2.render(<FilterableProductTable products={PRODUCTS} />),
   document.querySelector("#app");
